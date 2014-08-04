@@ -2,16 +2,6 @@
 
 class TodoItemController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
-
 
 	/**
 	 * Show the form for creating a new resource.
@@ -41,9 +31,12 @@ class TodoItemController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+
+	public function show($list_id, $item_id)
 	{
-		//
+		$item = TodoItem::find($item_id);
+		return View::make('items.show')
+			->with('item', $item);
 	}
 
 

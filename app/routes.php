@@ -31,7 +31,7 @@ Route::get('/db', function() {
 
 Route::resource('todos', 'TodoListController');
 
-Route::resource('todos.items', 'TodoItemController');
+Route::resource('todos.items', 'TodoItemController', array('except' => array('index')));
 
 // Event::listen('illuminate.query', function($query){
 // 	var_dump($query);
