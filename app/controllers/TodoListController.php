@@ -89,7 +89,7 @@ class TodoListController extends \BaseController {
 	public function update($id)
 	{
 
-		$rules = ['name' => 'required|unique:todo_lists' ] ;
+		$rules = ['name' => 'required|unique:todo_lists,name,' . $id ] ;
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->fails()) {
 			return Redirect::route('todos.edit', $id)->withErrors($validator)->withInput();
