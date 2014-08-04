@@ -3,6 +3,12 @@
 class TodoItemController extends \BaseController {
 
 
+	public function __construct()
+	{
+		$this->beforeFilter('csrf', array('on' => ['post', 'put']));
+	}
+
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -22,6 +28,7 @@ class TodoItemController extends \BaseController {
 	 */
 	public function store($list_id)
 	{
+
 		$rules = ['content' => 'required|unique:todo_items,content,NULL,id,todo_list_id,' . $list_id ] ;
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->fails()) {
@@ -35,6 +42,7 @@ class TodoItemController extends \BaseController {
 		$item->todo_list_id = $list_id;
 		$item->save();
 		return Redirect::route('todos.show', [$list_id])->withMessage('Item successfully added');
+	
 	}
 
 
@@ -47,9 +55,10 @@ class TodoItemController extends \BaseController {
 
 	public function show($list_id, $item_id)
 	{
+
 		$item = TodoItem::findOrFail($item_id);
-		return View::make('items.show')
-			->with('item', $item);
+		return View::make('items.show')->with('item', $item);
+
 	}
 
 
@@ -59,9 +68,11 @@ class TodoItemController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($list_id, $item_id)
 	{
-		//
+		$item = TodoItem::findOrFail($item_id);
+		$list = TodoList::findOrFail($list_id);
+		return View::make('items.edit')->with('item', $item)->with('list', $list);
 	}
 
 
@@ -71,9 +82,21 @@ class TodoItemController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($list_id, $item_id)
 	{
-		//
+
+		$rules = ['content' => 'required|unique:todo_items,content,' . $item_id . ',id,todo_list_id,' . $list_id ] ;
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return Redirect::route('todos.items.edit', [$list_id, $item_id])->withErrors($validator)->withInput();
+		}
+
+		$content = Input::get('content');
+		$item = TodoItem::findOrFail($item_id);
+		$item->content = $content;
+		$item->update();
+		return Redirect::route('todos.show', $list_id)->withMessage('List was updated');
+
 	}
 
 
