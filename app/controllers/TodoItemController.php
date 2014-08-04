@@ -35,14 +35,14 @@ class TodoItemController extends \BaseController {
 			return Redirect::route('todos.items.create', [$list_id])->withErrors($validator)->withInput();
 		}
 
+		
 		$content = Input::get('content');
-		$list_id = $list_id;
 		$item = new TodoItem();
 		$item->content = $content;
 		$item->todo_list_id = $list_id;
 		$item->save();
+
 		return Redirect::route('todos.show', [$list_id])->withMessage('Item successfully added');
-	
 	}
 
 
