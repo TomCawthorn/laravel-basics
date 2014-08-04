@@ -37,19 +37,12 @@ class TodoListController extends \BaseController {
 	 */
 	public function store()
 	{
-		// define rules
-		$rules = array(
-				'name' => array('required', 'unique:todo_lists')
-			);
-
-		// pass input to validator
+		$rules = ['name' => 'required|unique:todo_lists' ] ;
 		$validator = Validator::make(Input::all(), $rules);
-
-		// test validity
 		if ($validator->fails()) {
 			return Redirect::route('todos.create')->withErrors($validator)->withInput();
 		}
-
+		
 		$name = Input::get('name');
 		$list = new TodoList();
 		$list->name = $name;
@@ -95,15 +88,9 @@ class TodoListController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		// define rules
-		$rules = array(
-				'name' => array('required', 'unique:todo_lists')
-			);
 
-		// pass input to validator
+		$rules = ['name' => 'required|unique:todo_lists' ] ;
 		$validator = Validator::make(Input::all(), $rules);
-
-		// test validity
 		if ($validator->fails()) {
 			return Redirect::route('todos.edit', $id)->withErrors($validator)->withInput();
 		}
@@ -113,6 +100,7 @@ class TodoListController extends \BaseController {
 		$list->name = $name;
 		$list->update();
 		return Redirect::route('todos.index')->withMessage('List was updated');
+	
 	}
 
 
