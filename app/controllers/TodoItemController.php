@@ -8,9 +8,10 @@ class TodoItemController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($list_id)
 	{
-		//
+		$list = TodoList::findOrFail($list_id);
+		return View::make('items.create')->withList($list);
 	}
 
 
@@ -34,7 +35,7 @@ class TodoItemController extends \BaseController {
 
 	public function show($list_id, $item_id)
 	{
-		$item = TodoItem::find($item_id);
+		$item = TodoItem::findOrFail($item_id);
 		return View::make('items.show')
 			->with('item', $item);
 	}
