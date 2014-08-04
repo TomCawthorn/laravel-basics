@@ -36,11 +36,22 @@ class TodoItemController extends \BaseController {
 		}
 
 		
+/*
 		$content = Input::get('content');
 		$item = new TodoItem();
 		$item->content = $content;
 		$item->todo_list_id = $list_id;
 		$item->save();
+
+*/
+
+
+		$item = new TodoItem(['content' => $content]);
+
+		$list = TodoList::findOrFail($list_id);
+
+		$item = $list->listItems()->save($item);
+
 
 		return Redirect::route('todos.show', [$list_id])->withMessage('Item successfully added');
 	}
