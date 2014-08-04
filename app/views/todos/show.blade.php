@@ -4,7 +4,7 @@
 		<p>{{ link_to_route('todos.index', 'Back') }}</p>
 		<h1>{{{ $list->name }}}</h1>
 		@foreach ($items as $item)
-			<h4>{{{ $item->content }}}</h4>
+			<h4>{{ link_to_route('todos.items.show', $item->content, $parameters = array($list->id, $item->id)) }}</h4>
 		@endforeach
 	</div>
 @stop
