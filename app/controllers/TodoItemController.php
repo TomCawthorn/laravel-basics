@@ -106,9 +106,10 @@ class TodoItemController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($list_id, $item_id)
 	{
-		//
+		$todo_item = TodoItem::findOrFail($item_id)->delete();
+		return Redirect::route('todos.show', $list_id)->withMessage('Item Deleted');
 	}
 
 
