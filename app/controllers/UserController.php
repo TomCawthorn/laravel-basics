@@ -17,7 +17,6 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		$users = User::all();
-		$users = "hello";
 		return View::make('users.index')->with('users', $users);
 	}
 
@@ -40,7 +39,28 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
+		$rules = array(
+			'first_name' => 'required|min:2',
+			'last_name' => 'required|min:2',
+			'email' => 'required|email|unique:users',
+			'password' => 'required|confirmed',
+			'password_confirmation' => 'required|same:password'
+			);
+
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return Redirect::route('users.create')->withErrors($validator)->withInput();
+		}
+
+		$user = new User();
+		$user->first_name = Input::get('first_name');
+		$user->last_name = Input::get('last_name');
+		$user->email = Input::get('email');
+		$user->password = Input::get('password');
+		$user->save();
+
+		return Redirect::route('users.index')->withMessage('Item successfully added');
 	}
 
 
@@ -91,5 +111,10 @@ class UserController extends \BaseController {
 		//
 	}
 
+
+
+	public function login_page() {
+		return View::make('user_sessions.new');
+	}
 
 }

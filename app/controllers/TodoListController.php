@@ -14,7 +14,9 @@ class TodoListController extends \BaseController {
 	 */
 	public function index()
 	{
-		$todo_lists = TodoList::all();
+		$user = User::findOrFail(Auth::id());
+		//$todo_lists = TodoList::all();
+		$todo_lists = $user->todoLists()->get();
 		return View::make('todos.index')->with('todo_lists', $todo_lists);
 	}
 
@@ -46,6 +48,7 @@ class TodoListController extends \BaseController {
 		$name = Input::get('name');
 		$list = new TodoList();
 		$list->name = $name;
+		$list->user_id = Auth::id();
 		$list->save();
 
 		if ($list !== false) {

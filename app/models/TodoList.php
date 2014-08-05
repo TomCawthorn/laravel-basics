@@ -1,6 +1,15 @@
 <?php
 class TodoList extends Eloquent {
 
+	public function listItems()
+	{
+		return $this->hasMany('TodoItem');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('User');
+	}
 
 	public function has_completed_items() 
 	{
@@ -22,13 +31,6 @@ class TodoList extends Eloquent {
 	{
 		return $this->listItems()->count(); 
 	}
-
-
-	public function listItems()
-	{
-		return $this->hasMany('TodoItem');
-	}
-
 
 
 	public function get_list_status() 

@@ -41,6 +41,7 @@ class TodoItemController extends \BaseController {
 		$item = $list->listItems()->save($item);
 
 		return Redirect::route('todos.show', [$list_id])->withMessage('Item successfully added');
+		
 	}
 
 

@@ -34,15 +34,20 @@ Route::resource('todos', 'TodoListController');
 */
 
 Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
-Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
+Route::resource('todos.items', 'TodoItemController', ['except' => array('index', 'show') ] );
 
 /*
-|  Todo Users
+|  Users
 |---------------
 */
 
 Route::resource('users', 'UserController');
 
+/*
+|  UsersAuth
+|---------------
+*/
 
-
+Route::get('/login', ['as' => 'login', 'uses' => 'UserAuthController@create'] );
+Route::resource('user_auth', 'userAuthController', ['only' => array('destroy', 'store') ] );
 
