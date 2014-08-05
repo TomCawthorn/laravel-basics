@@ -31,13 +31,12 @@ class TodoList extends Eloquent {
 
 
 
-	public function get_list_status($list_id) 
+	public function get_list_status() 
 	{
-		$list = TodoList::findOrFail($list_id);
-		$total = $list->total_item_count();		
-		$completed = $list->completed_item_count();
+		$total = $this->total_item_count();		
+		$completed = $this->completed_item_count();
 
-		if ($list->has_completed_items()) {
+		if ($this->has_completed_items()) {
 			if ($total === $completed) {
 				$str = "You have completed all the items in this list. Great job!";
 			} else {
