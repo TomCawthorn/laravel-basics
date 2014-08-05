@@ -1,7 +1,10 @@
 <?php
 class TodoItem extends Eloquent {
 
+
 	protected $fillable = ['content', 'complete_on'];
+
+
 	public function todoList()
 	{
 		return $this->belongsTo('TodoList');
@@ -39,5 +42,6 @@ class TodoItem extends Eloquent {
 		}
 		$this->save();		
 	}
+
 
 }

@@ -103,7 +103,6 @@ class TodoListController extends \BaseController {
 		$list->name = $name;
 		$list->update();
 		return Redirect::route('todos.index')->withMessage('List was updated');
-	
 	}
 
 
