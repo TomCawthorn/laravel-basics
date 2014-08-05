@@ -1,20 +1,32 @@
 <?php
 class TodoItem extends Eloquent {
 
-	protected $fillable = ['content'];
+	protected $fillable = ['content', 'complete_on'];
 
 	public function todoList()
 	{
 		return $this->belongsTo('TodoList');
 	}
 
+
+	public function is_item_completed() 
+	{
+		if ($this->completed_on !== NULL) {
+			return true;			
+		} else {		
+			return false;
+		}
+	}
+
+
 	public function toggle_completed()
 	{
-		if ($this->completed_on == "") {
-			$this->compelted_on = time();
+		if (!$this->is_item_completed()) {
+			$this->completed_on = date("Y-m-d H:i:s");
 		} else {
-			$this->completed_on = "";
+			$this->completed_on = NULL;
 		}
+		$this->save();		
 	}
 
 }
