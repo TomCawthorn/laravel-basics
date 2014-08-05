@@ -7,7 +7,7 @@
 
 		<p>{{ link_to_route('todos.index', 'Back') }}</p>
 
-		{{ Form::open( array('route' => 'todos.store') ) }}
+		{{ Form::open( ['route' => 'todos.store'] ) }}
 			@include('todos.partials._form')
 		{{ Form::close() }}
 

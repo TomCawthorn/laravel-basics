@@ -20,18 +20,28 @@ Route::get('/todos', 'TodoListController@index');
 Route::get('/todos/{id}', 'TodoListController@show');
 */
 
+/*
+|  Todo Lists
+|---------------
+*/
+
 Route::get('/', 'TodoListController@index');
-
-
 Route::resource('todos', 'TodoListController');
 
+/*
+|  Todo Items
+|---------------
+*/
 
 Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
 Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
 
+/*
+|  Todo Users
+|---------------
+*/
 
-Route::get('/users', 'UserController@index');
-Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
+Route::resource('users', 'UserController');
 
 
 
