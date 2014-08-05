@@ -2,11 +2,22 @@
 class TodoItem extends Eloquent {
 
 	protected $fillable = ['content', 'complete_on'];
-
 	public function todoList()
 	{
 		return $this->belongsTo('TodoList');
 	}
+
+
+    public function scopeCompleted($query)
+    {
+        return $query->whereNotNull('completed_on');
+    }
+
+
+    public function scopeUncompleted($query)
+    {
+        return $query->where('completed_on', '=', NULL);
+    }
 
 
 	public function is_item_completed() 

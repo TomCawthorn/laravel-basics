@@ -4,6 +4,11 @@
 	<h2>All Todo Lists</h2>
 	@foreach ($todo_lists as $list)
 		<h4>{{ link_to_route('todos.show', $list->name, [$list->id]) }}</h4>
+
+		@if ($list->has_completed_items($list->id))
+			<p>Has completed items</p>
+		@endif			
+		
 		<ul class="no-bullet button-group">
 			<li>
 				{{ link_to_route('todos.edit', 'edit', [$list->id], ['class' => 'tiny button']) }}
