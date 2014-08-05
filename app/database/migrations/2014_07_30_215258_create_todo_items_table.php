@@ -16,9 +16,17 @@ class CreateTodoItemsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('todo_list_id');
-			$table->string('content')->unique();
+			$table->string('content');
 			$table->dateTime('completed_on')->nullable();
 			$table->timestamps();
+		});
+
+
+		Schema::table('todo_items', function ($table) {
+			$table->foreign('todo_list_id')
+      			->references('id')->on('todo_lists')
+      			->onDelete('cascade')
+      			->onUpdate('cascade');
 		});
 	}
 

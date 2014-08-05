@@ -11,28 +11,23 @@
 |
 */
 
-/**
-	* / = home
-	* /todos - all lists
-	* /todos/1 - show
-	* /todos/1/edit - edit and update
-	* /todos/create - create new list
+/*
+Useful
+ Event::listen('illuminate.query', function($query){
+ 	var_dump($query);
+ });
+Route::get('/todos', 'TodoListController@index');
+Route::get('/todos/{id}', 'TodoListController@show');
 */
 
 Route::get('/', 'TodoListController@index');
-//Route::get('/todos', 'TodoListController@index');
-//Route::get('/todos/{id}', 'TodoListController@show');
 
 Route::get('/db', function() {
-
 	$result = DB::table('todo_lists')->where('name', 'Your List')->first();
 	return $result->name;
 });
 
 Route::resource('todos', 'TodoListController');
 
-Route::resource('todos.items', 'TodoItemController', array('except' => array('index')));
+Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
 
-// Event::listen('illuminate.query', function($query){
-// 	var_dump($query);
-// });
