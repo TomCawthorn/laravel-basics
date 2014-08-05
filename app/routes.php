@@ -22,14 +22,17 @@ Route::get('/todos/{id}', 'TodoListController@show');
 
 Route::get('/', 'TodoListController@index');
 
-Route::get('/db', function() {
-	$result = DB::table('todo_lists')->where('name', 'Your List')->first();
-	return $result->name;
-});
 
 Route::resource('todos', 'TodoListController');
 
-Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
 
 Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
+Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
+
+
+Route::get('/users', 'UserController@index');
+Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
+
+
+
 

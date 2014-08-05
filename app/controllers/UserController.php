@@ -2,6 +2,13 @@
 
 class UserController extends \BaseController {
 
+
+	public function __construct()
+	{
+		$this->beforeFilter('csrf', array('on' => ['post', 'put']));
+	}
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -9,7 +16,9 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$users = User::all();
+		$users = "hello";
+		return View::make('users.index')->with('users', $users);
 	}
 
 
