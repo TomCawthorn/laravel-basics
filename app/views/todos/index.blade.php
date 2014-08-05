@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+
 	<div class="small-12 columns">
 
 		<h2>All Todo Lists</h2>
