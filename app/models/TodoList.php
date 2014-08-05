@@ -48,7 +48,7 @@ class TodoList extends Eloquent {
 			}
 			$str = "You have $total " . $this->plural_singular($total) . " to complete.";
 		} else {
-			$str = "This list has no items.";
+			$str = "This list has no items. " . link_to_route('todos.items.create', 'Add Item', [$this->id]);
 		}
 		return $str;
 	}
