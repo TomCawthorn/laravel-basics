@@ -30,4 +30,5 @@ Route::get('/db', function() {
 Route::resource('todos', 'TodoListController');
 
 Route::resource('todos.items', 'TodoItemController', array('except' => array('index', 'show')));
+Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
 

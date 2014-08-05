@@ -8,4 +8,13 @@ class TodoItem extends Eloquent {
 		return $this->belongsTo('TodoList');
 	}
 
+	public function toggle_completed()
+	{
+		if ($this->completed_on == "") {
+			$this->compelted_on = time();
+		} else {
+			$this->completed_on = "";
+		}
+	}
+
 }

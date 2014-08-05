@@ -96,4 +96,12 @@ class TodoItemController extends \BaseController {
 	}
 
 
+
+	public function completed($list_id, $item_id) {
+		$item = TodoItem::findOrFail($item_id);
+		$item->toggle_completed;
+		return Redirect::route('todos.show', $list_id)->withMessage('Item Updated')
+	}
+
+
 }
