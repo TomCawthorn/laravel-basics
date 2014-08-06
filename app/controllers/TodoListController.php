@@ -48,7 +48,6 @@ class TodoListController extends \BaseController {
 		$name = Input::get('name');
 		$list = new TodoList();
 		$list->name = $name;
-		$list->user_id = Auth::id();
 		$list->save();
 
 		if ($list !== false) {
