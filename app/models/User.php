@@ -7,14 +7,9 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	public function todoLists()
-	{
-		return $this->hasMany('TodoList');
-	}
-
 	use UserTrait, RemindableTrait;
-
-	protected $fillable = [''];
+	protected $fillable = ['first_name', 'last_name', 'email', 'password'];
+	
 
 	/**
 	 * The database table used by the model.
@@ -22,6 +17,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
+
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -31,11 +27,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password', 'remember_token');
 
 
-
-	public function setPasswordAttribute($pass)
-	{
-		$this->attributes['password'] = Hash::make($pass);
-	}
+	
 
 
 }

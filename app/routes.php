@@ -43,11 +43,4 @@ Route::resource('todos.items', 'TodoItemController', ['except' => array('index',
 
 Route::resource('users', 'UserController');
 
-/*
-|  UsersAuth
-|---------------
-*/
-
-Route::get('/login', ['as' => 'login', 'uses' => 'UserAuthController@create'] );
-Route::resource('user_auth', 'userAuthController', ['only' => array('destroy', 'store') ] );
 

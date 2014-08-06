@@ -3,7 +3,7 @@
 
 	<div class="small-12 columns">
 
-		<h2>All Todo Lists</h2>
+		<h2>All Todo Lists for</h2>
 
 		@foreach ($todo_lists as $list)
 			@include('todos.partials._todo')

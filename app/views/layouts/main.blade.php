@@ -24,11 +24,7 @@
 					<li class="divider"></li>
 					<li><a href="/login">Login</a></li>
 					<li class="divider"></li>
-					<li>
-						{{ Form::open( [ 'route' => ['user_auth.destroy'], 'method' => 'delete' ] ) }}
-							{{ Form::button('Logout', [ 'type' => 'submit' ], ['id' => 'logout_button']) }}
-						{{ Form::close() }}
-					</li>
+					<li><a href="/login">Logout</a></li>
 				</ul>
 			</section>
 		</nav>
