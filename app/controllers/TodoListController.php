@@ -39,7 +39,11 @@ class TodoListController extends \BaseController {
 	 */
 	public function store()
 	{
-		$rules = ['name' => 'required|unique:todo_lists' ] ;
+		$user = Sentry::getUser();
+		$rules = 
+		[	
+			'name' => 'required|unique:todo_lists,name,NULL,id,user_id,' . $user->id
+		];
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->fails()) {
 			return Redirect::route('todos.create')->withErrors($validator)->withInput();
@@ -47,7 +51,6 @@ class TodoListController extends \BaseController {
 
 		$name = Input::get('name');
 		$list = new TodoList(['name' => $name]);
-		$user = Sentry::getUser();
 		$list = $user->todoLists()->save($list);
 
 		if ($list !== false) {

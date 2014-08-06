@@ -48,6 +48,16 @@ class TodoList extends Eloquent {
 	}
 
 
+	public function has_any_items()
+	{
+		if ($this->total_item_count() > 0) {
+			return true;
+		} else {
+			return false;
+		}		
+	}
+
+
 	public function completed_item_count() 
 	{
 		return $this->listItems()->completed()->count();
