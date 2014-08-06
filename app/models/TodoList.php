@@ -8,16 +8,36 @@ class TodoList extends Eloquent {
 	 */
 	protected $table = 'todo_lists';
 
+	/**
+	 * Protected attributes
+	 *
+	 * @var string
+	 */
+	protected $fillable = ['name'];
 
+
+	/**
+	 * Associated Model TodoItem
+	 *
+	 * @var arr
+	 */
 	public function listItems()
 	{
 		return $this->hasMany('TodoItem');
 	}
 
+
+	/**
+	 * Associated Model User
+	 *
+	 * @var arr
+	 */
 	public function user()
 	{
 		return $this->belongsTo('User');
 	}
+
+
 
 	public function has_completed_items() 
 	{
@@ -47,19 +67,26 @@ class TodoList extends Eloquent {
 		$completed = $this->completed_item_count();
 
 		if ($this->has_completed_items()) {
-			if ($total === $completed) {
+			if ($total === $completed) 
+			{
 				$str = "You have completed all the items in this list. Great job!";
-			} else {
+			} 
+			else 
+			{
 				$str = "You have completed $completed out of $total " . $this->plural_singular($total) . "." ;
 			}
-		} elseif (!$this->has_completed_items() && $total > 0) {
-			if ($total === 0) {
-				$total = "no";
-			}
+		} 
+
+		elseif (!$this->has_completed_items() && $total > 0) 
+		{
 			$str = "You have $total " . $this->plural_singular($total) . " to complete.";
-		} else {
+		} 
+
+		else 
+		{
 			$str = "This list has no items. " . link_to_route('todos.items.create', 'Add Item', [$this->id]);
 		}
+
 		return $str;
 	}
 

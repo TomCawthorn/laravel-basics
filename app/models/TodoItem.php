@@ -8,10 +8,19 @@ class TodoItem extends Eloquent {
 	 */
 	protected $table = 'todo_items';
 
-
+	/**
+	 * Protected attributes
+	 *
+	 * @var string
+	 */
 	protected $fillable = ['content', 'complete_on'];
 
 
+	/**
+	 * Belongs to TodoList
+	 *
+	 * @var string
+	 */
 	public function todoList()
 	{
 		return $this->belongsTo('TodoList');

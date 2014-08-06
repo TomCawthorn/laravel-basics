@@ -14,9 +14,9 @@ class TodoListController extends \BaseController {
 	 */
 	public function index()
 	{
-		//$user = User::findOrFail(Auth::id());
-		$todo_lists = TodoList::all();
-		//$todo_lists = $user->todoLists()->get();
+		//$user = 
+		//$todo_lists = TodoList::all();
+		$todo_lists = Sentry::getUser()->todoLists()->get();
 		return View::make('todos.index')->with('todo_lists', $todo_lists);
 	}
 
@@ -44,16 +44,11 @@ class TodoListController extends \BaseController {
 		if ($validator->fails()) {
 			return Redirect::route('todos.create')->withErrors($validator)->withInput();
 		}
-		
-		// $name = Input::get('name');
-		// $list = new TodoList();
-		// $list->name = $name;
-		// $list->save();
 
 		$name = Input::get('name');
 		$list = new TodoList(['name' => $name]);
-		$user = User::findOrFail($list_id);
-		$item = $user->listItems()->save($item);
+		$user = Sentry::getUser();
+		$list = $user->todoLists()->save($list);
 
 		if ($list !== false) {
 			return Redirect::route('todos.show', $list->id)->withMessage('List was created');
