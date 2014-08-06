@@ -43,7 +43,8 @@ Route::resource('todos.items', 'TodoItemController', ['except' => array('index',
 |---------------
 */
 
-Route::resource('users', 'UserController');
+Route::get('/register',[ 'as' => 'users.register', 'uses' => 'UserController@showRegister']); 
+Route::post('/register',[ 'as' => 'users.register', 'uses' => 'UserController@storeRegister']);
 
 /*
 |  Users
@@ -55,9 +56,6 @@ Route::get('/login',[ 'as' => 'login', 'uses' => 'LoginController@showLogin']);
 Route::post('/login',[ 'as' => 'login', 'uses' => 'LoginController@storeLogin']);
  
 Route::get('/logout','LoginController@getLogout');
- 
-Route::get('/register',[ 'as' => 'register', 'uses' => 'LoginController@showRegister']); 
-Route::post('/register',[ 'as' => 'register', 'uses' => 'LoginController@storeRegister']);
 
 //Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
  

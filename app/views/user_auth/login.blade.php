@@ -7,8 +7,9 @@
 		<h2>Login</h2>
 
 		{{ Form::open( ['route' => 'login', 'method' => 'post'] ) }}
-			{{ Form::label('email', 'Email', ['class' => 'hide'] ) }}
-			{{ Form::email('email', null, ['placeholder' => 'Email'] ) }}
+			{{ Form::label('identity', 'Email', ['class' => 'hide'] ) }}
+			{{ Form::email('identity', null, ['placeholder' => 'Email'] ) }}
+			{{ $errors->first('email', '<small class="error">:message</small>') }}
 
 			{{ Form::label('password', 'Password', ['class' => 'hide']) }}
 			{{ Form::password('password', ['placeholder' => 'Password']) }}
@@ -19,7 +20,7 @@
 			{{ Form::submit('Log in', ['class' => 'button']) }}
 			<br>
  			{{ link_to_route('forgotpassword', "Lost your password?") }} | 
- 			{{ link_to_route('register', "Register") }}
+ 			{{ link_to_route('users.register', "Register") }}
 		{{ Form::close() }}
 
 	</div>

@@ -34,6 +34,18 @@
 		 	{{{ Session::get('message') }}}
 		 	</div>
 		 @endif
+
+		 @if (Session::has('success_msg'))
+		 	<div class="alert-box success">
+		 	{{{ Session::get('success_msg') }}}
+		 	</div>
+		 @endif
+
+		 @if (Session::has('error_msg'))
+		 	<div class="alert-box alert">
+		 	{{{ Session::get('error_msg') }}}
+		 	</div>
+		 @endif		 
 		 
 		<div class="row">
 		 	<div class="large-12 columns">
