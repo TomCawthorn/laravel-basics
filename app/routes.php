@@ -26,6 +26,7 @@ Route::get('/todos/{id}', 'TodoListController@show');
 */
 
 Route::get('/', 'TodoListController@index');
+
 Route::resource('todos', 'TodoListController');
 
 /*
@@ -34,6 +35,7 @@ Route::resource('todos', 'TodoListController');
 */
 
 Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
+
 Route::resource('todos.items', 'TodoItemController', ['except' => array('index', 'show') ] );
 
 /*
@@ -42,5 +44,31 @@ Route::resource('todos.items', 'TodoItemController', ['except' => array('index',
 */
 
 Route::resource('users', 'UserController');
+
+/*
+|  Users
+|---------------
+*/
+Route::get('/',array('before' => 'members_auth', 'uses' => 'LoginController@dashboard'));
+ 
+Route::get('/login','LoginController@showLogin');
+ 
+Route::post('/login','LoginController@storeLogin');
+ 
+Route::get('/logout','LoginController@getLogout');
+ 
+Route::get('/register','LoginController@showRegister');
+ 
+Route::post('/register','LoginController@storeRegister');
+ 
+Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
+ 
+Route::get('/forgotpassword','LoginController@showForgotpassword');
+ 
+Route::post('/forgotpassword','LoginController@storeForgotpassword');
+ 
+Route::get('/newpassword','LoginController@showNewPassword');
+ 
+Route::post('/newpassword','LoginController@storeNewPassword');
 
 
