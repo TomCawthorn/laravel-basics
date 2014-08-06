@@ -91,6 +91,8 @@ class TodoList extends Eloquent {
 	}
 
 
+
+
 	public function plural_singular($count) 
 	{
 		if ($count === 1) {
