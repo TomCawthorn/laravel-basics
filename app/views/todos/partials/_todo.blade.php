@@ -1,6 +1,9 @@
 		<h4>{{ link_to_route('todos.show', $list->name, [$list->id]) }}</h4>
-		<p>{{ $list->get_list_status($list->id) }}</p>
 
+		<p>{{ $list->get_list_status($list->id) }}</p>
+		<div class="progress large-12 success round">
+			<span class="meter" style="width: {{{ $list->percent_completed() }}}%"></span> 
+		</div>
 
 		<ul class="no-bullet button-group">
 			<li>

@@ -38,7 +38,6 @@ class TodoList extends Eloquent {
 	}
 
 
-
 	public function has_completed_items() 
 	{
 		if ($this->listItems()->completed()->count() > 0) {
@@ -93,6 +92,19 @@ class TodoList extends Eloquent {
 
 
 
+	public function percent_completed()
+	{
+		$total = $this->total_item_count();		
+		$completed = $this->completed_item_count();
+		if ($total > 0 && $completed > 0) {
+			return ($completed/$total) * 100;
+		} else {
+			return 0;
+		}
+	}
+
+
+
 	public function plural_singular($count) 
 	{
 		if ($count === 1) {
@@ -101,6 +113,8 @@ class TodoList extends Eloquent {
 			return "items";
 		}
 	}	
+
+
 
 
 }
