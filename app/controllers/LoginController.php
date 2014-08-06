@@ -44,7 +44,7 @@ class LoginController extends BaseController {
     public function storeLogin() 
     {
         //First let's start by making sure the input isn't something rediculous.
-        $inputs = array('email' => Input::get('email'), 'password' => Input::get('password'));
+        $inputs = array('email' => Input::get('email'), 'password' => Input::get('password'), 'remember_me' => Input::get('remember_me'));
         //$rules are purposefully thin to avoid giving maliscuous attackers any extra information.
         $rules = array('email' => 'required|email', 'password' => 'required');
 
@@ -68,7 +68,7 @@ class LoginController extends BaseController {
                 $credentials = array('email' => Input::get('email'), 'password' => Input::get('password'));
  
                 //For now auto activate users
-                $user = Sentry::authenticate($credentials, false);
+                $user = Sentry::authenticate($credentials, $inputs['remember_me']);
  
                 //At this point we may get many exceptions lets handle all user management and throttle exceptions
             } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {

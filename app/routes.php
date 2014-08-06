@@ -40,32 +40,34 @@ Route::post('/register',[ 'as' => 'users.register', 'uses' => 'UserController@st
 //Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
 
 
-/*
-|  Index
-|---------------
-*/
+Route::group(array('before' => 'members_auth'), function () {
 
-Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
- 
+	/*
+	|  Index
+	|---------------
+	*/
 
-/*
-|  Todo Lists
-|---------------
-*/
+	Route::get('/', ['as' => 'index' ,'uses' => 'TodoListController@index']);
+	 
 
-//Route::get('/', 'TodoListController@index');
-Route::resource('todos', 'TodoListController');
+	/*
+	|  Todo Lists
+	|---------------
+	*/
 
-
-/*
-|  Todo Items
-|---------------
-*/
-
-Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
-Route::resource('todos.items', 'TodoItemController', ['except' => array('index', 'show') ] );
+	//Route::get('/', 'TodoListController@index');
+	Route::resource('todos', 'TodoListController');
 
 
+	/*
+	|  Todo Items
+	|---------------
+	*/
+
+	Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
+	Route::resource('todos.items', 'TodoItemController', ['except' => array('index', 'show') ] );
+
+});
 
 
 

@@ -45,7 +45,13 @@
 		 	<div class="alert-box alert">
 		 	{{ Session::get('error_msg') }}
 		 	</div>
-		 @endif		 
+		 @endif	
+
+		 @if (Session::has('info_msg'))
+		 	<div class="alert-box primary">
+		 	{{ Session::get('info_msg') }}
+		 	</div>
+		 @endif	
 		 
 		<div class="row">
 		 	<div class="large-12 columns">

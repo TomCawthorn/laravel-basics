@@ -100,6 +100,7 @@ Route::filter('csrf', function()
 
 Route::filter('members_auth',function(){
 	if(!Sentry::check()){
+		Session::flash('info_msg', 'You need to be logged in to view that page.');
 		return Redirect::to('/login');
 	}
 });
