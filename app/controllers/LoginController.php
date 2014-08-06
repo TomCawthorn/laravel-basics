@@ -52,6 +52,7 @@ public function storeRegister() {
                 $data['userId'] = $user -> getId();
  
                 //send email with link to activate.
+                //Need to edit app/config/mail.php
                 /*Mail::send('emails.register_confirm', $data, function($m) use ($data) {
                  $m -> to($data['email']) -> subject('Thanks for Registration - Support Team');
                  });*/
@@ -108,9 +109,35 @@ return View::make('newpassword');
 public function storeNewPassword() {
  
 }
+
+
+public function registerActivate($userId, $activationCode) 
+{
+        try {
+            // Find the user using the user id
+            $user = Sentry::findUserById($userId);
+ 
+            // Attempt to activate the user
+            if ($user -> attemptActivation($activationCode)) {
+                Session::flash('success_msg', 'User Activation Successfull Please login below.');
+                return Redirect::to('/login');
+            } else {
+                Session::flash('error_msg', 'Unable to activate user Try again later or contact Support Team.');
+                return Redirect::to('/register');
+            }
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            Session::flash('error_msg', 'User was not found.');
+            return Redirect::to('/register');
+        } catch (Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
+            Session::flash('error_msg', 'User is already activated.');
+            return Redirect::to('/register');
+        }
+}
+
  
 //Create user groups 
-public function createGroup($groupName) {
+public function createGroup($groupName) 
+{
         $input = array('newGroup' => $groupName);
  
         // Set Validation Rules
@@ -137,7 +164,8 @@ public function createGroup($groupName) {
                 return false;
             }
         }
-    }
+}
+
 
 
 }
