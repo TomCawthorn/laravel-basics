@@ -16,7 +16,7 @@ Instead directing to TodoController@index
 //Show login Form
 public function showLogin() {
  
-return View::make('login');
+return View::make('user_auth.login');
 }
  
 //Authenticate User
@@ -94,8 +94,9 @@ public function storeLogin() {
     }
  
 //Show register Form
-public function showRegister() {
-return View::make('register');
+public function showRegister() 
+{
+	return View::make('users.register');
 }
 
 //Log User Out

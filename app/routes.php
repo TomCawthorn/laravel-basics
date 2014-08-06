@@ -51,24 +51,20 @@ Route::resource('users', 'UserController');
 */
 Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
  
-Route::get('/login','LoginController@showLogin');
- 
-Route::post('/login','LoginController@storeLogin');
+Route::get('/login',[ 'as' => 'login', 'uses' => 'LoginController@showLogin']);
+Route::post('/login',[ 'as' => 'login', 'uses' => 'LoginController@storeLogin']);
  
 Route::get('/logout','LoginController@getLogout');
  
-Route::get('/register','LoginController@showRegister');
+Route::get('/register',[ 'as' => 'register', 'uses' => 'LoginController@showRegister']); 
+Route::post('/register',[ 'as' => 'register', 'uses' => 'LoginController@storeRegister']);
+
+//Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
  
-Route::post('/register','LoginController@storeRegister');
- 
-Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
- 
-Route::get('/forgotpassword','LoginController@showForgotpassword');
- 
-Route::post('/forgotpassword','LoginController@storeForgotpassword');
- 
+Route::get('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@showForgotpassword']);
+Route::post('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@storeForgotpassword']);
+
 Route::get('/newpassword','LoginController@showNewPassword');
- 
 Route::post('/newpassword','LoginController@storeNewPassword');
 
 
