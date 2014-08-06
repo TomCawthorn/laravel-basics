@@ -88,3 +88,18 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Sentry Login Filter
+|--------------------------------------------------------------------------
+|
+|If already logged in go to dashboard or else login
+|
+*/
+
+Route::filter('members_auth',function(){
+	if(!Sentry::check()){
+		return Redirect::to('/login');
+	}
+});
