@@ -40,27 +40,44 @@ class UserController extends \BaseController {
 	public function storeRegister() 
 	{
         // Gather Sanitized Input
-        $input = array('username' => Input::get('username'), 'email' => Input::get('email'), 'password' => Input::get('password'), 'password_confirmation' => Input::get('password_confirmation'));
+        $input = array(
+        	'first_name' => Input::get('first_name'),
+        	'last_name' => input::get('last_name'),
+        	'email' => Input::get('email'), 
+        	'password' => Input::get('password'), 
+        	'password_confirmation' => Input::get('password_confirmation'));
  
         // Set Validation Rules
-        $rules = array('username' => 'required|min:4|max:20|unique:profile,username', 'email' => 'required|min:4|max:32|email|unique:profile,email', 'password' => 'required|min:6|confirmed', 'password_confirmation' => 'required|same:password');
+        $rules = array(
+        	'first_name' => 'required|min:2|max:50',
+        	'last_name' => 'required|min:2|max:50',
+        	'email' => 'required|min:4|max:32|email|unique:profile,email', 
+        	'password' => 'required|min:6|confirmed', 
+        	'password_confirmation' => 'required|same:password');
  
         //Run input validation
         $v = Validator::make($input, $rules);
  
         if ($v -> fails()) {
-            return Redirect::to('register') -> withErrors($v) -> withInput(Input::except(array('password', 'password_confirmation')));
+            return Redirect::to('register') 
+            	-> withErrors($v) 
+            	-> withInput(Input::except(array('password', 'password_confirmation')));
         } else {
  
             try {
                 //Pre activate user
-                $user = Sentry::register(array('email' => $input['email'], 'password' => $input['password']), true);
+	                $user = Sentry::register([
+	                	'first_name' => $input['first_name'],
+	                	'last_name' => $input['last_name'],
+	                	'email' => $input['email'], 
+	                	'password' => $input['password']
+	                	], true);
                 //$user = Sentry::register(array('email' => $input['email'], 'password' => $input['password']));
  
                 //Get the activation code & prep data for email
-                $data['activationCode'] = $user -> GetActivationCode();
-                $data['email'] = $input['email'];
-                $data['userId'] = $user -> getId();
+                //$data['activationCode'] = $user -> GetActivationCode();
+                //$data['email'] = $input['email'];
+                //$data['userId'] = $user -> getId();
  
                 //send email with link to activate.
                 //Need to edit app/config/mail.php
@@ -69,6 +86,7 @@ class UserController extends \BaseController {
                  });*/
  
                 //If no groups created then create new groups
+                /*
                 try {
                     $user_group = Sentry::findGroupById(1);
                 } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
@@ -78,23 +96,23 @@ class UserController extends \BaseController {
                 }
  
                 $user -> addGroup($user_group);
+ 				*/
+                // $user = new Profile();
  
-                $user = new Profile();
- 
-                $user -> user_id = $data['userId'];
-                $user -> email = $data['email'];
-                $user -> username = $input['username'];
-                $user -> save();
+                // $user -> user_id = $data['userId'];
+                // $user -> email = $data['email'];
+                // $user -> username = $input['username'];
+                // $user -> save();
  
                 //success!
-                Session::flash('success_msg', 'Thanks for sign up . Please activate your account by clicking activation link in your email');
-                return Redirect::to('/register');
+                Session::flash('success_msg', 'You have successfully signed up for ODOT! Log in below.');
+                return Redirect::to('/login');
  
             } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
-                Session::flash('error_msg', 'Username/Email Required.');
+                Session::flash('error_msg', 'Make sure you\'ve filled in all the boxes');
                 return Redirect::to('/register') -> withErrors($v) -> withInput(Input::except(array('password', 'password_confirmation')));
             } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
-                Session::flash('error_msg', 'User Already Exist.');
+                Session::flash('error_msg', 'Doh! That email has already been taken. Maybe you\'ve ' . link_to_route('forgotpassword', 'forgotten your password') . '?');
                 return Redirect::to('/register') -> withErrors($v) -> withInput(Input::except(array('password', 'password_confirmation')));
             }
  

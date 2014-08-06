@@ -7,9 +7,9 @@
 		<h2>Login</h2>
 
 		{{ Form::open( ['route' => 'login', 'method' => 'post'] ) }}
-			{{ Form::label('identity', 'Email', ['class' => 'hide'] ) }}
-			{{ Form::text('identity', null, ['placeholder' => 'Email'] ) }}
-			{{ $errors->first('identity', '<small class="error">:message</small>') }}
+			{{ Form::label('email', 'Email', ['class' => 'hide'] ) }}
+			{{ Form::text('email', null, ['placeholder' => 'Email'] ) }}
+			{{ $errors->first('email', '<small class="error">:message</small>') }}
 
 			{{ Form::label('password', 'Password', ['class' => 'hide']) }}
 			{{ Form::password('password', ['placeholder' => 'Password']) }}

@@ -6,10 +6,6 @@
 {{ Form::text('last_name', null, ['placeholder' => 'Last Name']) }}
 {{ $errors->first('last_name', '<small class="error">:message</small>') }}
 
-{{ Form::label('username', 'Username', ['class' => 'hide']) }}
-{{ Form::text('username', null, ['placeholder' => 'Username']) }}
-{{ $errors->first('username', '<small class="error">:message</small>') }}
-
 {{ Form::label('email', 'Email', ['class' => 'hide']) }}
 {{ Form::email('email', null, ['placeholder' => 'Email']) }}
 {{ $errors->first('email', '<small class="error">:message</small>') }}

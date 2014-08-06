@@ -43,7 +43,7 @@
 
 		 @if (Session::has('error_msg'))
 		 	<div class="alert-box alert">
-		 	{{{ Session::get('error_msg') }}}
+		 	{{ Session::get('error_msg') }}
 		 	</div>
 		 @endif		 
 		 

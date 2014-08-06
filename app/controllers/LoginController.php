@@ -43,43 +43,29 @@ class LoginController extends BaseController {
     //Authenticate User
     public function storeLogin() 
     {
-        $inputs = array('identity' => Input::get('identity'), 'password' => Input::get('password'));
-        //Since user can enter username,email we cannot have email validator
-        $rules = array('identity' => 'required|min:4|max:32', 'password' => 'required|min:6');
+        //First let's start by making sure the input isn't something rediculous.
+        $inputs = array('email' => Input::get('email'), 'password' => Input::get('password'));
+        //$rules are purposefully thin to avoid giving maliscuous attackers any extra information.
+        $rules = array('email' => 'required|email', 'password' => 'required');
 
-        //Find is that username or password and change identity validation rules
-        //Lets use regular expressions
-        if (filter_var(Input::get('identity'), FILTER_VALIDATE_EMAIL)) {
-            //It is email
-            $rules['identity'] = 'required|min:4|max:32|email';
-        } else {
-            //It is username . Check if username exist in profile table
-            if (Profile::where('username', Input::get('identity')) -> count() > 0) {
-                //User exist so get email address
-                $user = Profile::where('username', Input::get('identity')) -> first();
-                $inputs['identity'] = $user -> email;
- 
-            } else {
-                Session::flash('error_msg', 'Invalid Username or Password');
-                return Redirect::to('login') -> withInput(Input::except('password'));
-            }
+        if (!filter_var(Input::get('email'), FILTER_VALIDATE_EMAIL)) {
+            Session::flash('error_msg', 'Invalid Email or Password');
+            return Redirect::to('login') -> withInput(Input::except('password'));
         }
- 
         $v = Validator::make($inputs, $rules);
- 
         if ($v -> fails()) {
             return Redirect::to('login') -> withErrors($v) -> withInput(Input::except('password'));
         } else {
             try {
                 //Try to authenticate user
-                $user = Sentry::getUserProvider() -> findByLogin(Input::get('identity'));
+                $user = Sentry::getUserProvider() -> findByLogin(Input::get('email'));
  
                 $throttle = Sentry::getThrottleProvider() -> findByUserId($user -> id);
  
                 $throttle -> check();
  
                 //Authenticate user
-                $credentials = array('email' => Input::get('identity'), 'password' => Input::get('password'));
+                $credentials = array('email' => Input::get('email'), 'password' => Input::get('password'));
  
                 //For now auto activate users
                 $user = Sentry::authenticate($credentials, false);
@@ -92,23 +78,23 @@ class LoginController extends BaseController {
                 Session::flash('error_msg', 'Password field is required.');
                 return Redirect::to('/login');
             } catch (Cartalyst\Sentry\Users\WrongPasswordException $e) {
-                Session::flash('error_msg', 'Wrong password, try again.');
+                Session::flash('error_msg', 'Invalid Email or Password.');
                 return Redirect::to('/login');
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                Session::flash('error_msg', 'User was not found.');
+                Session::flash('error_msg', 'Invalid Email or Password.');
                 return Redirect::to('/login');
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-                Session::flash('error_msg', 'User is not activated.');
+                Session::flash('error_msg', 'Invalid Email or Password.');
                 return Redirect::to('/login');
             } catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
-                Session::flash('error_msg', 'User is suspended ');
+                Session::flash('error_msg', 'Invalid Email or Password.');
                 return Redirect::to('/login');
             } catch (Cartalyst\Sentry\Throttling\UserBannedException $e) {
-                Session::flash('error_msg', 'User is banned.');
+                Session::flash('error_msg', 'Invalid Email or Password.');
                 return Redirect::to('/login');
             }
  
-            Session::flash('success_msg', 'Loggedin Successfully');
+            Session::flash('success_msg', 'Hey ' . $user->first_name . '!');
             return Redirect::to('/');
  
         } 
@@ -120,7 +106,7 @@ class LoginController extends BaseController {
     //Show forgotpassword Form
     public function showForgotpassword() 
     {
-        return View::make('forgotpassword');
+        return View::make('user_auth.forgotpassword');
     }
  
 

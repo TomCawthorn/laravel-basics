@@ -29,7 +29,6 @@ Route::get('/newpassword','LoginController@showNewPassword');
 Route::post('/newpassword','LoginController@storeNewPassword');
 
 
-
 /*
 |  Users
 |---------------
@@ -41,14 +40,13 @@ Route::post('/register',[ 'as' => 'users.register', 'uses' => 'UserController@st
 //Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
 
 
-
 /*
 |  Index
 |---------------
 */
+
 Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
  
-
 
 /*
 |  Todo Lists
@@ -56,8 +54,8 @@ Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@i
 */
 
 //Route::get('/', 'TodoListController@index');
-
 Route::resource('todos', 'TodoListController');
+
 
 /*
 |  Todo Items
