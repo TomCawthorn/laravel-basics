@@ -11,14 +11,44 @@
 |
 */
 
+
 /*
-Useful
- Event::listen('illuminate.query', function($query){
- 	var_dump($query);
- });
-Route::get('/todos', 'TodoListController@index');
-Route::get('/todos/{id}', 'TodoListController@show');
+|  Loggin In
+|--------------
 */
+
+//Logging in and out
+Route::get('/login',[ 'as' => 'login', 'uses' => 'LoginController@showLogin']);
+Route::post('/login',[ 'as' => 'login', 'uses' => 'LoginController@storeLogin']);
+Route::get('/logout','LoginController@getLogout');
+
+//Password Recovery
+Route::get('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@showForgotpassword']);
+Route::post('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@storeForgotpassword']);
+Route::get('/newpassword','LoginController@showNewPassword');
+Route::post('/newpassword','LoginController@storeNewPassword');
+
+
+
+/*
+|  Users
+|---------------
+*/
+
+//Registration
+Route::get('/register',[ 'as' => 'users.register', 'uses' => 'UserController@showRegister']); 
+Route::post('/register',[ 'as' => 'users.register', 'uses' => 'UserController@storeRegister']);
+//Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
+
+
+
+/*
+|  Index
+|---------------
+*/
+Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
+ 
+
 
 /*
 |  Todo Lists
@@ -35,34 +65,9 @@ Route::resource('todos', 'TodoListController');
 */
 
 Route::get('/todos/{list_id}/items/{item_id}/completed', [ 'as' => 'todos.items.completed', 'uses' => 'TodoItemController@completed'] );
-
 Route::resource('todos.items', 'TodoItemController', ['except' => array('index', 'show') ] );
 
-/*
-|  Users
-|---------------
-*/
 
-Route::get('/register',[ 'as' => 'users.register', 'uses' => 'UserController@showRegister']); 
-Route::post('/register',[ 'as' => 'users.register', 'uses' => 'UserController@storeRegister']);
 
-/*
-|  Users
-|---------------
-*/
-Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
- 
-Route::get('/login',[ 'as' => 'login', 'uses' => 'LoginController@showLogin']);
-Route::post('/login',[ 'as' => 'login', 'uses' => 'LoginController@storeLogin']);
- 
-Route::get('/logout','LoginController@getLogout');
-
-//Route::get('/register/{userId}/activate/{activationCode}','LoginController@registerActivate');
- 
-Route::get('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@showForgotpassword']);
-Route::post('/forgotpassword',[ 'as' => 'forgotpassword', 'uses' => 'LoginController@storeForgotpassword']);
-
-Route::get('/newpassword','LoginController@showNewPassword');
-Route::post('/newpassword','LoginController@storeNewPassword');
 
 

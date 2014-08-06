@@ -8,8 +8,8 @@
 
 		{{ Form::open( ['route' => 'login', 'method' => 'post'] ) }}
 			{{ Form::label('identity', 'Email', ['class' => 'hide'] ) }}
-			{{ Form::email('identity', null, ['placeholder' => 'Email'] ) }}
-			{{ $errors->first('email', '<small class="error">:message</small>') }}
+			{{ Form::text('identity', null, ['placeholder' => 'Email'] ) }}
+			{{ $errors->first('identity', '<small class="error">:message</small>') }}
 
 			{{ Form::label('password', 'Password', ['class' => 'hide']) }}
 			{{ Form::password('password', ['placeholder' => 'Password']) }}
