@@ -16,7 +16,15 @@ class BaseController extends Controller {
 	}
 
 
-
+	/**
+	 * If user is logged in, get the user.
+	 *
+	 * @return void
+	 */
+	if (Sentry::check()) 
+	{
+		$user = Sentry::getUser();
+	}
 
 
 }

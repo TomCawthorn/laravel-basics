@@ -1,6 +1,14 @@
 <?php
 class TodoList extends Eloquent {
 
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'todo_lists';
+
+
 	public function listItems()
 	{
 		return $this->hasMany('TodoItem');
