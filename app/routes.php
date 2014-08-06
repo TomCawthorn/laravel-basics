@@ -25,7 +25,7 @@ Route::get('/todos/{id}', 'TodoListController@show');
 |---------------
 */
 
-Route::get('/', 'TodoListController@index');
+//Route::get('/', 'TodoListController@index');
 
 Route::resource('todos', 'TodoListController');
 
@@ -49,7 +49,7 @@ Route::resource('users', 'UserController');
 |  Users
 |---------------
 */
-Route::get('/',array('before' => 'members_auth', 'uses' => 'LoginController@dashboard'));
+Route::get('/',array('before' => 'members_auth', 'uses' => 'TodoListController@index'));
  
 Route::get('/login','LoginController@showLogin');
  

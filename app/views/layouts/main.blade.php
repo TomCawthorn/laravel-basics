@@ -24,7 +24,7 @@
 					<li class="divider"></li>
 					<li><a href="/login">Login</a></li>
 					<li class="divider"></li>
-					<li><a href="/login">Logout</a></li>
+					<li><a href="/logout">Logout</a></li>
 				</ul>
 			</section>
 		</nav>

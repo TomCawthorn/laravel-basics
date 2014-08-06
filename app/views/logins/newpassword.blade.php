@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.main')
  
 @section('content')
 {{Form::open(array('url'=>'/newpassword','method'=>'post'))}}</pre>
