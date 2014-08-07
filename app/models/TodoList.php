@@ -38,6 +38,11 @@ class TodoList extends Eloquent {
 	}
 
 
+	/**
+	 * Returns true if the todo list has completed items
+	 *
+	 * @var bool
+	 */
 	public function has_completed_items() 
 	{
 		if ($this->listItems()->completed()->count() > 0) {
@@ -48,6 +53,11 @@ class TodoList extends Eloquent {
 	}
 
 
+	/**
+	 * Returns true if todo list has any associated items
+	 *
+	 * @var bool
+	 */
 	public function has_any_items()
 	{
 		if ($this->total_item_count() > 0) {
@@ -58,24 +68,44 @@ class TodoList extends Eloquent {
 	}
 
 
+
+	/**
+	 * Returns the count of completed items for the todo list.
+	 *
+	 * @var int
+	 */
 	public function completed_item_count() 
 	{
 		return $this->listItems()->completed()->count();
 	}
 
 
+
+	/**
+	 * Returns the count of total items for the todo list.
+	 *
+	 * @var int
+	 */
 	public function total_item_count() 
 	{
 		return $this->listItems()->count(); 
 	}
 
 
+
+	/**
+	 * Returns a string of the current completed status
+	 * of the todo list.
+	 * 
+	 * @var str
+	 */
 	public function get_list_status() 
 	{
 		$total = $this->total_item_count();		
 		$completed = $this->completed_item_count();
 
-		if ($this->has_completed_items()) {
+		if ($this->has_completed_items()) 
+		{
 			if ($total === $completed) 
 			{
 				$str = "You have completed all the items in this list. Great job!";
@@ -101,7 +131,11 @@ class TodoList extends Eloquent {
 
 
 
-
+	/**
+	 * Returns the percentage of completed items
+	 * 
+	 * @var int
+	 */
 	public function percent_completed()
 	{
 		$total = $this->total_item_count();		
@@ -114,7 +148,12 @@ class TodoList extends Eloquent {
 	}
 
 
-
+	/**
+	 * Returns the plural or singular word 'item' depending
+	 * on count of items.
+	 *
+	 * @var str
+	 */
 	public function plural_singular($count) 
 	{
 		if ($count === 1) {
