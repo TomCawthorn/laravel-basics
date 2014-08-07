@@ -15,7 +15,6 @@ class TodoList extends Eloquent {
 	 */
 	protected $fillable = ['name'];
 
-
 	/**
 	 * Associated Model TodoItem
 	 *
@@ -26,7 +25,6 @@ class TodoList extends Eloquent {
 		return $this->hasMany('TodoItem');
 	}
 
-
 	/**
 	 * Associated Model User
 	 *
@@ -36,7 +34,6 @@ class TodoList extends Eloquent {
 	{
 		return $this->belongsTo('User');
 	}
-
 
 	/**
 	 * Returns true if the todo list has completed items
@@ -52,7 +49,6 @@ class TodoList extends Eloquent {
 		}
 	}
 
-
 	/**
 	 * Returns true if todo list has any associated items
 	 *
@@ -67,8 +63,6 @@ class TodoList extends Eloquent {
 		}		
 	}
 
-
-
 	/**
 	 * Returns the count of completed items for the todo list.
 	 *
@@ -79,8 +73,6 @@ class TodoList extends Eloquent {
 		return $this->listItems()->completed()->count();
 	}
 
-
-
 	/**
 	 * Returns the count of total items for the todo list.
 	 *
@@ -90,8 +82,6 @@ class TodoList extends Eloquent {
 	{
 		return $this->listItems()->count(); 
 	}
-
-
 
 	/**
 	 * Returns a string of the current completed status
@@ -129,8 +119,6 @@ class TodoList extends Eloquent {
 		return $str;
 	}
 
-
-
 	/**
 	 * Returns the percentage of completed items
 	 * 
@@ -147,7 +135,6 @@ class TodoList extends Eloquent {
 		}
 	}
 
-
 	/**
 	 * Returns the plural or singular word 'item' depending
 	 * on count of items.
@@ -162,8 +149,5 @@ class TodoList extends Eloquent {
 			return "items";
 		}
 	}	
-
-
-
-
+	
 }
