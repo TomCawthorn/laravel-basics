@@ -2,6 +2,7 @@
 
 class TodoListController extends \BaseController {
 
+
 	public function __construct()
 	{
 		$this->beforeFilter('csrf', array('on' => ['post', 'put']));
@@ -14,8 +15,6 @@ class TodoListController extends \BaseController {
 	 */
 	public function index()
 	{
-		//$user = 
-		//$todo_lists = TodoList::all();
 		$todo_lists = Sentry::getUser()->todoLists()->get();
 		return View::make('todos.index')->with('todo_lists', $todo_lists);
 	}
@@ -67,6 +66,7 @@ class TodoListController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		//$list = TodoList::findOrFail($id);
 		$list = TodoList::findOrFail($id);
 		$items = $list->listItems()->get();
 		return View::make('todos.show')

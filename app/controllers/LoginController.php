@@ -18,16 +18,6 @@ class LoginController extends BaseController {
         Sentry::logout();
         return Redirect::to('/login');
      }
-
-
-
-
-    /*
-    Instead directing to TodoController@index
-    	public function dashboard(){
-    	return View::make('index');
-    }
-    */
      
 
 
@@ -36,7 +26,6 @@ class LoginController extends BaseController {
     public function showLogin() {
         return View::make('user_auth.login');
     }
-
 
 
      

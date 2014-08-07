@@ -30,7 +30,7 @@ Route::post('/newpassword','LoginController@storeNewPassword');
 
 
 /*
-|  Users
+|  Registration
 |---------------
 */
 

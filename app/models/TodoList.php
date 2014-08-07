@@ -25,6 +25,11 @@ class TodoList extends Eloquent {
 		return $this->hasMany('TodoItem');
 	}
 
+    public function scopeAuthorOnly($query)
+    {
+        return $query->where('user_id', '=', Auth::getUser()->id);
+    }
+
 	/**
 	 * Associated Model User
 	 *

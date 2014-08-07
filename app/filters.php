@@ -106,7 +106,22 @@ Route::filter('members_auth',function()
 	} 
 });
 
+/*
+|--------------------------------------------------------------------------
+| Author Only
+|--------------------------------------------------------------------------
+|
+|Only show todo lists written by the user.
+|
+*/
 
+Route::filter('author_only',function()
+{
+	$list = TodoList::findOrFail($list_id);
+	if ($list->user_id != Sentry::getUser()->id) {
+		return Redirect::route('todos.index');
+	}
+});
 
 
 
