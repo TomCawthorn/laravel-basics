@@ -20,11 +20,12 @@
 			<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
-					<li><a href="/">Home</a></li>
-					<li class="divider"></li>
-					<li><a href="/login">Login</a></li>
-					<li class="divider"></li>
-					<li><a href="/logout">Logout</a></li>
+					@if (ViewHelpers::is_logged_in())
+						<li><a href="/logout">Logout</a></li>
+					@else
+						<li><a href="/login">Login</a></li>
+					@endif
+
 				</ul>
 			</section>
 		</nav>
